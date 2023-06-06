@@ -11,7 +11,7 @@ When creating a table we need to answer ourselves for many questions. The most i
 2. What properties does this *thing* have? **Each city has a _name_, _country_, _population_ and _area_**
 3. What type of data does each of those properties contain? **name → _string_, country → _string_, population → _number_, area → _number_**
 
-According to those steps we should create a **table** called *"Cities"* containing **columns** called *"name", "country", "population"* and *"area"*. Each column should indicate the type of data that it is going to store.
+According to those steps we should create a **table** called *"cities"* containing **columns** called *"name", "country", "population"* and *"area"*. Each column should indicate the type of data that it is going to store.
 
 ### SQL Statement
 SQL statement for creating the table mentioned in the previous section.
@@ -23,4 +23,46 @@ CREATE TABLE cities(
   area INTEGER
 );
 ```
-## 
+### Inserting data into a table
+When inserting the data we need to mention the table and optionally names of the columns. The order of mentioning the columns may be different to the one with which we initialized our table. Nonetheless the values for a specific record (row) need to be given in the same order as columns in a statement. We can
+
+### SQL Statement
+SQL statement for inserting data into previously created table "cities".
+
+We can add just one row:
+```
+INSERT INTO cities (name, country, population, area)
+VALUES ('Tokyo', 'Japan', 37732000, 8231);
+```
+or multiply rows:
+```
+INSERT INTO cities (name, country, population, area)
+VALUES 
+  ('Delhi', 'India', 32226000, 2344),
+  ('Shanghai', 'China', 24073000, 4333),
+  ('Sao Paulo', 'Brazil', 23086000, 3649);
+```
+If we won't give columns names we need to write values of a record in the same order as the table was created with.
+```
+INSERT INTO cities
+VALUES 
+  ('Mexico City', 'Mexico', 21804000, 2530);
+```
+If we won't write values for all of the columns, the columns for which the values weren't given will store "none".
+```
+INSERT INTO cities
+VALUES 
+  ('Cairo', 'Egypt');
+```
+
+Writing all of these statements will produce a table visualised below.
+<br>CITIES:
+
+| name | country | population | area |
+| --- | --- | --- | --- |
+| Tokyo | Japan | 37732000 | 8231 |
+| Delhi | India | 32226000 | 2344 |
+| Shanghai | China | 24073000 | 4333 |
+| Sao Paulo | Brazil | 23086000 | 3649 |
+| Mexico City | Mexico | 21804000 | 2530 |
+| Cairo | Egypt | null | null |
