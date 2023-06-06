@@ -34,7 +34,7 @@ We can add just one row:
 INSERT INTO cities (name, country, population, area)
 VALUES ('Tokyo', 'Japan', 37732000, 8231);
 ```
-or multiply rows:
+or multiple rows:
 ```
 INSERT INTO cities (name, country, population, area)
 VALUES 
@@ -78,3 +78,49 @@ It will show us all of the columns with all of the records stored in the table "
 SELECT country, name FROM cities;
 ```
 This will show only two columns: country and name. They will be displayed in an order we write them in a statement.
+<br> We can also select the same column multiple times (usefult when displaying lots of columns):
+```
+SELECT name, country, name FROM cities;
+```
+### Calculated columns
+We can transform or proccess data before pulling it out from a database. We can work with different types of data.
+<br><br>**NUMBERS**
+<br>There are a few of math operations we can do on our record. 
+<br> The basics are:
+
+| SYMBOL | OPERATION |
+| --- | --- |
+| + | ADD |
+| - | SUBTRACT |
+| * | MULTIPLY |
+| / | DIVIDE |
+| ^ | EXPONENT |
+| \|/ | SQUARE ROOT |
+| @ | ABSOLUT VALUE |
+| % | REMAINDER |
+
+<br>**STRINGS**
+| SYMBOL | OPERATION |
+| --- | --- |
+| \|\| | Join two strings |
+| CONCAT() | Join two strings |
+| LOWER() | Gives a lowercase string |
+| UPPER() | Gives an uppercase string |
+| LENGTH() | Gives number of characters in a string |
+
+<br>We can use this functions and operations in a SELECT statement to pull transformed data from our database.
+<br><br> **EXAMPLES**
+<br> To retrieve the density of population we need to divide population by area:
+```
+SELECT name, population/area AS density FROM cities;
+```
+To better understand the visualised data we can name the calculated column using alias with AS statement.
+<br> To select the name and the country as a one string we can use both **||** or **CONCAT()**:
+```
+SELECT name || ', ' || country FROM countries;
+```
+or
+```
+SELECT CONCAT(name, ', ', country) FROM cities;
+```
+As we see, we can also add any string given between two single quotes.
