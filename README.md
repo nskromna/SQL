@@ -66,3 +66,15 @@ Writing all of these statements will produce a table visualised below.
 | Sao Paulo | Brazil | 23086000 | 3649 |
 | Mexico City | Mexico | 21804000 | 2530 |
 | Cairo | Egypt | null | null |
+
+## Retrieving data with SELECT
+If we'd like to retrieve all of the data store in our table we can use asterisk which means "ALL" in SQL.
+```
+SELECT * FROM cities;
+```
+It will show us all of the columns with all of the records stored in the table "cities".
+<br><br> We can also select just some of the columns:
+```
+SELECT country, name FROM cities;
+```
+This will show only two columns: country and name. They will be displayed in an order we write them in a statement.
