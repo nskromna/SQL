@@ -48,7 +48,7 @@ INSERT INTO cities
 VALUES 
   ('Mexico City', 'Mexico', 21804000, 2530);
 ```
-If we won't write values for all of the columns, the columns for which the values weren't given will store "none".
+If we won't write values for all of the columns, the columns for which the values weren't given will store "null".
 ```
 INSERT INTO cities
 VALUES 
