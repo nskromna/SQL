@@ -96,7 +96,7 @@ We can transform or proccess data before pulling it out from a database. We can 
 | / | DIVIDE |
 | ^ | EXPONENT |
 | \|/ | SQUARE ROOT |
-| @ | ABSOLUT VALUE |
+| @ | ABSOLUTE VALUE |
 | % | REMAINDER |
 
 <br>**STRINGS**
@@ -112,7 +112,7 @@ We can transform or proccess data before pulling it out from a database. We can 
 <br><br> **EXAMPLES**
 <br> To retrieve the density of population we need to divide population by area:
 ```
-SELECT name, population/area AS density FROM cities;
+SELECT name, population/area AS population_density FROM cities;
 ```
 To better understand the visualised data we can name the calculated column using alias with AS statement.
 <br> To select the name and the country as a one string we can use both **||** or **CONCAT()**:
@@ -124,3 +124,49 @@ or
 SELECT CONCAT(name, ', ', country) FROM cities;
 ```
 As we see, we can also add any string given between two single quotes.
+
+## Filtering the data
+The WHERE keyword allows us to filter the set of results we get back from a query. For example we want to see the cities which has the area over 4000 (square kilometers):
+```
+SELECT * FROM cities WHERE area > 4000;
+```
+Instead of ">" sign we can use a variety of comparison math operators:
+| SYMBOL | OPERATION |
+| --- | --- |
+| = | Are the values equal? |
+| > | Is the value on the left greater? |
+| < | Is the value on the left smaller? |
+| >= | Is the value on the left greater or equal to? |
+| <= | Is the value on the left smaller or equal to? |
+| <> or != | Are the values not equal? |
+| IN | Is the value present in the list? |
+| NOT IN | Is the value not present in the list? |
+| BETWEEN | Is the value between two other values? |
+
+Example for IN/NOT IN clause:
+```
+SELECT * FROM cities
+WHERE name IN ('Tokio', 'Sao Paulo');
+```
+Example for BETWEEN clause:
+```
+SELECT * FROM cities
+WHERE area BETWEEN 3000 AND 5000;
+```
+### Compound WHERE clauses
+We can use several conditions to filter our records. To do so, we need to combine WHERE clause with AND, OR and NOT operators.
+```
+SELECT * FROM cities
+WHERE area > 4000 AND country = 'China';
+```
+### Calculations in WHERE clause
+It is also possible to do calculations like in SELECT clause. 
+```
+SELECT
+  name,
+  population/area AS population_density
+FROM
+  cities
+WHERE
+  population/area > 6000;
+```
