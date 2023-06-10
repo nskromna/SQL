@@ -301,7 +301,7 @@ Let's imagine our table with the world largest cities is full. We want to know h
 ### SQL Statement
 ```
 SELECT country, COUNT(name)
-FROM table1
+FROM cities
 GROUP BY country;
 ```
 The part of the result would be:
