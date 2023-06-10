@@ -212,7 +212,7 @@ Adding a foreign key constraint when creating a table (for PostgreSQL):
 CREATE TABLE newTable2(
   id SERIAL PRIMARY KEY,
   column2 VARCHAR(200),
-  table1_id INTEGER REFRENCES Table1(id)
+  table_id INTEGER REFRENCES newTable(id)
 );
 ```
 We don't mark it as SERIAL because we want to specify these values. So it has a data type of INTEGER. We need to add important part of the syntax: REFERENCES and then the name of the table and the name of the column in the brackets to which this foreign key will reference.
@@ -227,8 +227,8 @@ When adding a new record and providing foreign key there are some restricitions:
 When we want to delete a record to which another record is referenced by a foreign key, there are a few ways how to do it and what will happen. We need to add some code when creating a table to make it work. The options are:
 | ON DELETE option | What happens to a record B that is referenced to beign deleted record A |
 | --- | --- |
-| ON DELETE RESTRICT | Throws an error |
-| ON DELETE NO ACTION | Throws an error |
+| ON DELETE RESTRICT | Throw an error |
+| ON DELETE NO ACTION | Throw an error |
 | ON DELETE CASCADE | Delete the record B as well |
 | ON DELETE SET NULL | Set the foreign key of a record B to NULL |
 | ON DELETE SET DEFAULT | Set the foreign key of a record B to a default value, if one is provided |
@@ -238,7 +238,7 @@ When we want to delete a record to which another record is referenced by a forei
 CREATE TABLE newTable2(
   id SERIAL PRIMARY KEY,
   column2 VARCHAR(200),
-  table1_id INTEGER REFRENCES Table1(id) ON DELETE CASCADE
+  table_id INTEGER REFRENCES newTable(id) ON DELETE CASCADE
 );
 ```
 ## JOINS
@@ -247,5 +247,67 @@ JOIN clause joins two or more tables together under a specified condition. It co
 2. LEFT JOIN
 3. RIGHT JOIN
 4. FULL JOIN
+<br>Let's assume we want to join two tables:
 
 ### INNER JOIN
+It returns only the rows from all the tables being joined that fulfill the specified conditions.
+
+### SQL Statement
+```
+SELECT row1, row2
+FROM table1
+JOIN table2 ON table1.id = table2.table1_id;
+```
+### LEFT JOIN
+It returns all of the records from the "left" table (table1) and matching records from the "right" table (table2).
+
+### SQL Statement
+```
+SELECT row1, row2
+FROM table1
+LEFT JOIN table2 ON table1.id = table2.table1_id;
+```
+### RIGHT JOIN
+It returns all of the records from the "right" table (table2) and matching records from the "left" table (table1).
+
+### SQL Statement
+```
+SELECT row1, row2
+FROM table1
+RIGHT JOIN table2 ON table1.id = table2.table1_id;
+```
+### FULL JOIN
+It returns all of the records from both of the tables.
+
+### SQL Statement
+```
+SELECT row1, row2
+FROM table1
+FULL JOIN table2 ON table1.id = table2.table1_id;
+```
+## Aggregation of records
+There are two another techniques in SQL which are somehow connected to each other. It is aggregation and grouping.
+
+### Grouping
+The result of grouping is rows. We need to use GROUP BY statement. It groups rows that has the same value into the summary rows. 
+### Aggregating
+The result of aggregating the records is single value. The most popular are:
+- COUNT() - gives the number of records
+- AVG() - gives the average value
+- SUM() - gives the sum
+- MIN() and MAX() - gives minimum and maximum value from the group of values
+
+Let's imagine our table with the world largest cities is full. We want to know how many cities from each country is on the list.
+### SQL Statement
+```
+SELECT country, COUNT(name)
+FROM table1
+GROUP BY country;
+```
+The part of the result would be:
+| country | count(name) |
+| --- | --- |
+| China | 20 |
+| India | 9 |
+| United States | 9 |
+
