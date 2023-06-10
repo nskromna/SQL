@@ -311,3 +311,4 @@ The part of the result would be:
 | India | 9 |
 | United States | 9 |
 
+### Filtering groups with HAVING
