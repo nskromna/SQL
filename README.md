@@ -170,3 +170,82 @@ FROM
 WHERE
   population/area > 6000;
 ```
+## Updating the rows
+When we want to update the records we need to use the UPDATE and SET clauses. We always updating the ROWS. WHERE clause helps us choose the right record to update.
+```
+UPDATE cities
+SET population = 500000000
+WHERE city = 'Tokyo';
+```
+## Deleting the rows
+Similar to updating. We use DELETE FROM clause together with WHERE to filter the right record to delete.
+```
+DELETE FROM cities
+WHERE city = 'Tokyo';
+```
+## Primary and foreign keys
+When designing databases usually there is a relation between them. It can be one of four:
+- one-to-one
+- one-to-many
+- many-to-one
+- many-to-many
+With keys we can link two (or more) databases or tables.
+### Primary key
+Primary key constraint uniquely indentifies each record in the table. A table can have only one primary key and it is a column or a group of columns. It cannot contain NULL values.
+
+### SQL Statement
+Adding a primary key constraint when creating a table (for PostgreSQL):
+```
+CREATE TABLE newTable(
+  id SERIAL PRIMARY KEY,
+  column1 VARCHAR(200)
+);
+```
+The data type of id "SERIAL" tells PostgreSQL to generate the values in this column for us automatically. So when adding a new record we're not going to provide any value for an id column. Then we need to mark this column as PRIMARY KEY.
+
+### Foreign key
+Foreign key constraint used to prevent actions that would destroy links between tables. It is a column that references to another table. A table can have many foreign keys.
+
+### SQL Statement
+Adding a foreign key constraint when creating a table (for PostgreSQL):
+```
+CREATE TABLE newTable2(
+  id SERIAL PRIMARY KEY,
+  column2 VARCHAR(200),
+  table1_id INTEGER REFRENCES Table1(id)
+);
+```
+We don't mark it as SERIAL because we want to specify these values. So it has a data type of INTEGER. We need to add important part of the syntax: REFERENCES and then the name of the table and the name of the column in the brackets to which this foreign key will reference.
+
+### Foreign key constraints around insertion
+When adding a new record and providing foreign key there are some restricitions:
+1. When we add a foreign key that references to an existing record in the second table everything is OK.
+2. When we add a foreign key that references to a record that doesn't exist it'll provide an ERROR.
+3. When we don't want to add a foreign key (for some reason) to a record we need to type NULL.
+
+### Foreing key constraints around deletion
+When we want to delete a record to which another record is referenced by a foreign key, there are a few ways how to do it and what will happen. We need to add some code when creating a table to make it work. The options are:
+| ON DELETE option | What happens to a record B that is referenced to beign deleted record A |
+| --- | --- |
+| ON DELETE RESTRICT | Throws an error |
+| ON DELETE NO ACTION | Throws an error |
+| ON DELETE CASCADE | Delete the record B as well |
+| ON DELETE SET NULL | Set the foreign key of a record B to NULL |
+| ON DELETE SET DEFAULT | Set the foreign key of a record B to a default value, if one is provided |
+
+### SQL Statement
+```
+CREATE TABLE newTable2(
+  id SERIAL PRIMARY KEY,
+  column2 VARCHAR(200),
+  table1_id INTEGER REFRENCES Table1(id) ON DELETE CASCADE
+);
+```
+## JOINS
+JOIN clause joins two or more tables together under a specified condition. It combines rows creating a new temporary table. There are four major types of joins:
+1. INNER JOIN
+2. LEFT JOIN
+3. RIGHT JOIN
+4. FULL JOIN
+
+### INNER JOIN
