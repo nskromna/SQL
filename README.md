@@ -307,8 +307,35 @@ GROUP BY country;
 The part of the result would be:
 | country | count(name) |
 | --- | --- |
+| India | 9 |
+| China | 20 |
+| United States | 9 |
+
+### Filtering groups with HAVING
+To filter the obtained data with grouping we need to use HAVING clause instead of WHERE.
+<br> For example, if we want to list down just the countries that have above 5 largest cities in the world it'd look like this:
+```
+SELECT country, COUNT(name)
+FROM cities
+GROUP BY country
+HAVING COUNT(name) > 5;
+```
+## Sorting
+To sort our obtained data we need to use ORDER BY clause. In default it will order the records in an ascending way. It means from the lowest number to the highest or alphabetically. Also numbers are lower than letters - it follows ASCII table order. <br>If we want to order in a descending way we need to add DESC after the clause. 
+<br>Also it is possible to order by many columns. Then you need to separate them with commas. After each column you can specify if this should be ASC or DESC.
+<br><br> For example, if we want to order the group of countries by the number of cities descending and - if the numbers are the same - alphabetically it'd look like this:
+```
+SELECT country, COUNT(name)
+FROM cities
+GROUP BY country
+HAVING COUNT(name) > 5
+ORDER BY COUNT(name) DESC, country; //we can write ASC after 'country' but it is not necessary
+```
+The part of the result that it is showed before would change to:
+| country | count(name) |
+| --- | --- |
 | China | 20 |
 | India | 9 |
 | United States | 9 |
 
-### Filtering groups with HAVING
+First it is ordered by the number of cities descending (from the highest to the lowest) and for the two countries that have the same number of cities it is additionally ordered by the country name alphabetically.
