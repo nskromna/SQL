@@ -383,4 +383,4 @@ UNION
   OFFSET 10
 )
 ```
-This will give us cities in the positions 1-5 and 11-15. The parentheses aren't always necessary but it's better to use them. In this case if we wouldn't use them we would end with an error because the databese wouldn't know if we want to limit and offset the partial query or the whole query.
+This will give us cities in the positions 1-5 and 11-15. The parentheses aren't always necessary but it's better to use them. In this case if we didn't use them we would end with an error because the databese wouldn't know if we wanted to limit and offset the partial query or the whole query.
