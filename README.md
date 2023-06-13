@@ -247,7 +247,7 @@ JOIN clause joins two or more tables together under a specified condition. It co
 2. LEFT JOIN
 3. RIGHT JOIN
 4. FULL JOIN
-<br>Let's assume we want to join two tables:
+<br><br>Let's assume we want to join two tables:
 
 ### INNER JOIN
 It returns only the rows from all the tables being joined that fulfill the specified conditions.
@@ -339,3 +339,48 @@ The part of the result that it is showed before would change to:
 | United States | 9 |
 
 First it is ordered by the number of cities descending (from the highest to the lowest) and for the two countries that have the same number of cities it is additionally ordered by the country name alphabetically.
+
+### Offset and limit
+**Offset** is how many rows we want to skip and **limit** is how many rows we want to pull. By convention the limit is defined before the offset.
+<br>For example we want to know what are the largest cities in the positions 8-10.
+```
+SELECT id, name, country
+FROM cities
+LIMIT 3
+OFFSET 7;
+```
+The result would be:
+| id | name | country |
+| --- | --- | --- |
+| 8 | Beijing | China |
+| 9 | Dhaka | Bangladesh |
+| 10 | Osaka | Japan |
+
+## Unions and intersections
+Union glues together two sets of results. We need to write to separate queries and betweem them use the keyword UNION. It will join together all sets of results. It deletes all  of the duplicates. If we want to see all of the duplicate records we need to use the keyword UNION ALL. If we want to join two or more sets of results they must have the same structure. It means the same column names and the same data type in these columns.
+<br> In the similar way works the INTERSECT AND EXCEPT. Intersection helps us find the common rows in all sets of results, exception returns rows that are present in the first set but not in the second one. Here works also the additional keyword ALL.
+| keyword | action |
+| --- | --- |
+| UNION | Join together the results of two queries and remove the duplicate rows |
+| UNION ALL | Join together the results of two queries |
+| INTERSECT | Find the rows common in the results of two queries and remove the duplicate rows |
+| INTERSECT ALL | Find the rows common in the results of two queries |
+| EXCEPT | Find the rows that are present in the first query but not in the second query and remove the duplicate rows |
+| EXCEPT ALL | Find the rows that are present in the first query but not in the second query |
+
+### SQL Statement
+```
+(
+  SELECT *
+  FROM cities
+  LIMIT 5
+)
+UNION
+(
+  SELECT *
+  FROM cities
+  LIMIT 5
+  OFFSET 10
+)
+```
+This will give us cities in the positions 1-5 and 11-15. The parethesis aren't always necessary but it's better to use them. In this case if we wouldn't use them we would end with an error because the databese wouldn't know if we want to limit and offset the partial query or the whole query.
