@@ -329,7 +329,7 @@ SELECT country, COUNT(name)
 FROM cities
 GROUP BY country
 HAVING COUNT(name) > 5
-ORDER BY COUNT(name) DESC, country; //we can write ASC after 'country' but it is not necessary
+ORDER BY COUNT(name) DESC, country; --we can write ASC after 'country' but it is not necessary
 ```
 The part of the result that it is showed before would change to:
 | country | count(name) |
@@ -384,3 +384,22 @@ UNION
 )
 ```
 This will give us cities in the positions 1-5 and 11-15. The parentheses aren't always necessary but it's better to use them. In this case if we didn't use them we would end with an error because the databese wouldn't know if we wanted to limit and offset the partial query or the whole query.
+
+## Subqueries
+Subquery is a query nested in another query. It can occur in different part of a query, for example in clauses: SELECT, FROM, WHERE, DELETE, INSERT. The inner query must run on its own.
+<br> Using subqueries in different locations is challenging because it requires to change the data type or shape that is being returned by them. Subqueries can be source of:
+- a **value** (in SELECT clause)
+- **rows** (in FROM clause)
+- a **column** (in WHERE clause)
+
+Like in this query:
+```
+SELECT
+p1.name,
+(SELECT COUNT(name) FROM products) -- this is the source of a value
+
+FROM (SELECT * FROM products) AS p1  -- this is the source of rows
+JOIN(SELECT * FROM products) AS p2 ON p1.id = p2.id -- this is the source of rows
+
+WHERE p1.id IN (SELECT id FROM products); -- this is the source of a column
+```
