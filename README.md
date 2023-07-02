@@ -403,3 +403,8 @@ JOIN(SELECT * FROM products) AS p2 ON p1.id = p2.id -- this is the source of row
 
 WHERE p1.id IN (SELECT id FROM products); -- this is the source of a column
 ```
+### SELECT
+If we want to add a subquery to a SELECT statement it has to be a **single value** (also a row with one column). So we may often use MAX, MIN, COUNT etc. 
+
+### FROM
+If we want to add a subquery to a FROM statement it can be any subquery as long as  the outer SELECTs, WHEREs etc. arre compatible.-  g
